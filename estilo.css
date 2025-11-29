@@ -1,0 +1,282 @@
+body {
+	margin: 0;
+	background: radial-gradient(circle, #020111, #000000);
+	overflow: hidden;
+	height: 100vh;
+	cursor: pointer;
+	font-family: "Arial", sans-serif;
+	color: white;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+/* Add large instruction text */
+.instructions {
+	font-size: 2rem;
+	font-weight: bold;
+	z-index: 10;
+	color: #ff9671;
+	text-shadow: 1px -1px 7px rgb(142 142 142 / 80%);
+}
+
+.projectile {
+	position: absolute;
+	width: 12px;
+	height: 12px;
+	background: white;
+	border-radius: 50%;
+	box-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
+		0 0 30px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.4);
+}
+
+.particule {
+	position: absolute;
+	font-size: 1.5rem;
+	font-family: "Cursive", serif;
+	font-weight: bold;
+	color: white;
+	transform: scale(0);
+	opacity: 0;
+	white-space: nowrap;
+}
+
+.sparkle {
+	position: absolute;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: white;
+	transform: scale(0);
+	opacity: 0;
+}
+
+/* ========================================= */
+/*  SOBRE (ARREGLADO PARA QUE LA HOJA NO SE VEA) */
+/* ========================================= */
+
+.envelope-wrapper {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 100;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	cursor: pointer;
+	pointer-events: none;
+}
+
+#envelope {
+	position: relative;
+	width: 480px;
+	height: 330px;  /* mantiene el tamaño del sobre */
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #8b0000;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+	pointer-events: auto;
+}
+
+.front {
+	position: absolute;
+	width: 0;
+	height: 0;
+	z-index: 3;
+}
+
+.flap {
+	border-left: 240px solid transparent;
+	border-right: 240px solid transparent;
+	border-bottom: 120px solid transparent;
+	border-top: 180px solid #800020;
+	transform-origin: top;
+	pointer-events: none;
+}
+
+.pocket {
+	border-left: 240px solid #a52a2a;
+	border-right: 240px solid #a52a2a;
+	border-bottom: 205px solid #9b2d30;  /* aumentado para que tape la parte baja */
+	border-top: 140px solid transparent;  /* ajustado para mantener proporción */
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+}
+
+/* ========================================= */
+/*  CARTA (YA NO SOBRESALE) */
+/* ========================================= */
+
+.letter {
+	position: absolute;
+	background-color: #fff;
+	width: 86%;
+	left: 7%;
+	height: 102%;       /* aumentado: la hoja será más alta y llenará abajo */
+	top: 1%;           /* bajada para centrar dentro del sobre */
+	border-radius: 6px;
+	box-shadow: 0 2px 26px rgba(0, 0, 0, 0.12);
+	font-family: "Dancing Script", cursive;
+	font-size: 1.2rem;
+	overflow: hidden;
+}
+
+.words {
+	position: relative;
+	left: 10%;
+	width: 80%;
+	height: auto;
+	padding: 8px;
+	font-size: 1rem;
+	margin: 10px 0;
+	background-color: transparent;
+}
+
+.words.line1 {
+	top: auto;
+	left: 10px;
+	font-size: 1rem;
+	width: 30%;
+	height: auto;
+	margin-top: 7px;
+	font-weight: bold;
+	color: #8b0000;
+}
+
+.words.line2 {
+	top: auto;
+	left: 10px;
+	width: 90%;
+	text-align: left;
+	font-size: 1.2rem;
+	color: #333;
+	line-height: 1.8;
+	min-height: 320px;   /* aumentado para asegurar que el texto tenga espacio */
+	white-space: pre-wrap;
+}
+
+.words.line2::after {
+	content: '|';
+	animation: blink 1s infinite;
+	color: #8b0000;
+	font-weight: bold;
+}
+
+@keyframes blink {
+	0%, 50% { opacity: 1; }
+	51%, 100% { opacity: 0; }
+}
+
+.open .flap {
+	transform: rotateX(180deg);
+	transition: transform 0.4s ease, z-index 0.6s;
+	z-index: 1;
+}
+
+.close .flap {
+	transform: rotateX(0deg);
+	transition: transform 0.4s 0.6s ease, z-index 1s;
+	z-index: 5;
+}
+
+.close .letter {
+	transform: translateY(0px);
+	transition: transform 0.4s ease, z-index 1s;
+	z-index: 1;
+}
+
+.open .letter {
+	transform: translateY(-240px); /* sube un poco más para compensar el mayor tamaño */
+	transition: transform 0.4s 0.6s ease, z-index 0.6s;
+	z-index: 2;
+	overflow: visible;
+}
+
+.hearts {
+	position: absolute;
+	top: 90px;
+	left: 0;
+	right: 0;
+	z-index: 2;
+}
+
+.heart {
+	position: absolute;
+	bottom: 0;
+	right: 10%;
+	pointer-events: none;
+}
+
+.heart:before,
+.heart:after {
+	position: absolute;
+	content: "";
+	left: 50px;
+	top: 0;
+	width: 50px;
+	height: 80px;
+	background: #cc0000;
+	border-radius: 50px 50px 0 0;
+	transform: rotate(-45deg);
+	transform-origin: 0 100%;
+	pointer-events: none;
+}
+
+.heart:after {
+	left: 0;
+	transform: rotate(45deg);
+	transform-origin: 100% 100%;
+}
+
+.close .heart {
+	opacity: 0;
+	animation: none;
+}
+
+.a1 {
+	left: 20%;
+	transform: scale(0.6);
+	opacity: 1;
+	animation: slideUp 4s linear 1, sideSway 2s ease-in-out 4 alternate;
+	animation-fill-mode: forwards;
+	animation-delay: 0.7s;
+}
+
+.a2 {
+	left: 55%;
+	transform: scale(1);
+	opacity: 1;
+	animation: slideUp 5s linear 1, sideSway 4s ease-in-out 2 alternate;
+	animation-fill-mode: forwards;
+	animation-delay: 0.7s;
+}
+
+.a3 {
+	left: 10%;
+	transform: scale(0.8);
+	opacity: 1;
+	animation: slideUp 7s linear 1, sideSway 2s ease-in-out 6 alternate;
+	animation-fill-mode: forwards;
+	animation-delay: 0.7s;
+}
+
+.open .heart {
+	opacity: 1;
+}
+
+@keyframes slideUp {
+	0% { top: 0; }
+	100% { top: -600px; }
+}
+
+@keyframes sideSway {
+	0% { margin-left: 0px; }
+	100% { margin-left: 50px; }
+}
